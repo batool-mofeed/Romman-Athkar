@@ -43,6 +43,7 @@ class LocationHelper(
                         val location = task.result
                         if (location != null) {
                             val latLng = LatLng(location.latitude, location.longitude)
+                            println("lat lng: ${latLng.latitude} , ${latLng.longitude}")
                             loadAddressFromCoordinates(
                                 latLng.latitude,
                                 latLng.longitude
@@ -93,22 +94,19 @@ class LocationHelper(
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun loadAddressFromCoordinates(LATITUDE: Double, LONGITUDE: Double, address: (String) -> Unit) {
-        val geocoder = Geocoder(context, Locale.getDefault())
+        val geocoder = Geocoder(context, Locale.US)
         try {
             geocoder.getFromLocation(LATITUDE, LONGITUDE, 1,
                 object : Geocoder.GeocodeListener {
                     override fun onGeocode(addresses: MutableList<Address>) {
-                        addresses[0].getAddressLine(0)
+                        println("cityyyy ${addresses[0].locality}")
+
+                        address(addresses[0].locality.lowercase(Locale.ENGLISH))
                     }
-
-                    override fun onError(errorMessage: String?) {
-                        super.onError(errorMessage)
-
-                    }
-
                 })
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
 }

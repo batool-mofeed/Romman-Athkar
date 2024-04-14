@@ -60,6 +60,7 @@ class HomeFragment : Fragment() {
             LocationDialog.newInstance {
                 viewModel?.loadPrayers(it)
                 Prefs["location"] = it
+
             }.show(parentFragmentManager, null)
         } else {
             viewModel?.loadPrayers(Prefs["location", ""])

@@ -38,6 +38,7 @@ class AthkarViewModel : ViewModel() {
             try {
                 val response = ApiClient.apiService.getAthkar()
                 if (response.isSuccessful) {
+                    println("Response athkarr :: ${response.code()} ${response.body()}")
                     decryptResponse(response.body())
                 }
             } catch (e: Exception) {

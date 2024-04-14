@@ -28,12 +28,14 @@ class HomeViewModel : ViewModel() {
     private val _loading = MutableStateFlow(false)
     val loading = _loading.asStateFlow()
 
+    val cityName = MutableStateFlow("No location detected yet!")
     val prayerName = MutableStateFlow("")
     val prayerTime = MutableStateFlow("")
     val nextPrayerName = MutableStateFlow("")
     val nextPrayerTime = MutableStateFlow("")
 
     fun loadPrayers(cityFile: String) {
+        cityName.value = cityFile
         viewModelScope.launch {
             _loading.value = true
             try {
@@ -111,14 +113,15 @@ class HomeViewModel : ViewModel() {
         val formatter = DateTimeFormatter.ofPattern("hh:mm a") // Define custom time formatter
         val currentTime = LocalTime.now()
         val nextPrayerIndex =
-            prayerTimes.indexOfFirst { LocalTime.parse(it, formatter) > currentTime }.takeIf { it != -1 }
+            prayerTimes.indexOfFirst { LocalTime.parse(it, formatter) > currentTime }
+                .takeIf { it != -1 }
                 ?: 0
 
         val prayerNames = listOf("Fajr", "Shuruq", "Dhuhr", "Asr", "Maghrib", "Isha")
 
         with(prayerTimes) {
             prayerTime.value = getOrNull(nextPrayerIndex) ?: firstOrNull() ?: ""
-            prayerName.value =  prayerNames.getOrElse(nextPrayerIndex) { "Unknown" }
+            prayerName.value = prayerNames.getOrElse(nextPrayerIndex) { "Unknown" }
             nextPrayerTime.value = getOrNull(nextPrayerIndex + 1) ?: firstOrNull() ?: ""
             nextPrayerName.value = prayerNames.getOrElse(nextPrayerIndex + 1) { "Unknown" }
         }
