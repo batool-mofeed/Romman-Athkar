@@ -1,0 +1,14 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Inactive state -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#000000"/> <!-- Black color for inactive thumb -->
+        </shape>
+    </item>
+    <!-- Default state -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#42A8C3"/> <!-- Default color for active thumb -->
+        </shape>
+    </item>
+</selector>

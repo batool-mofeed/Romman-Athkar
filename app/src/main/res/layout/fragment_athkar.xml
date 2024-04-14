@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_athkar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/back_btn"
+                        android:layout_width="wrap_content"
+                        android:padding="@dimen/_16sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_arrow_back" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Athkar"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/export_btn"
+                        android:layout_width="wrap_content"
+                        android:padding="@dimen/_16sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_export" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_130sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_home_card" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_athkar_card"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/athkar_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardCornerRadius="@dimen/_16ssp"
+                app:cardElevation="@dimen/_8sdp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_6sdp"
+                    android:weightSum="3">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/athkar_back_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:text="Back" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/play_pause_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_play_btn" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/athkar_next_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:text="Next" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

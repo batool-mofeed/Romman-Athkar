@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.romman.athkarromman.ui.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_editPrayersFragment"
+            app:destination="@id/editPrayersFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_athkarFragment"
+            app:destination="@id/athkarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPrayersFragment"
+        android:name="com.romman.athkarromman.ui.editprayers.EditPrayersFragment"
+        android:label="EditPrayersFragment" />
+    <fragment
+        android:id="@+id/exportFragment"
+        android:name="com.romman.athkarromman.ui.exportfragment.ExportFragment"
+        android:label="ExportFragment" >
+        <argument
+            android:name="text"
+            app:argType="string" />
+        <argument
+            android:name="link"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/athkarFragment"
+        android:name="com.romman.athkarromman.ui.athkar.AthkarFragment"
+        android:label="AthkarFragment" >
+        <action
+            android:id="@+id/action_athkarFragment_to_exportFragment2"
+            app:destination="@id/exportFragment" />
+    </fragment>
+</navigation>

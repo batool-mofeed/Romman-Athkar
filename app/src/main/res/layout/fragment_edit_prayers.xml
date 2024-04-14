@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_edit_prayers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_arrow_back" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Prayer Time"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_130sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_home_card" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_top_radius"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Prayer"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Azan"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Iqama"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Alarm"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_bottom_radius"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_4sdp"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Fajr"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fajr_azan_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fajr_iqama_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/fajr_switch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            app:thumbTint="@drawable/switch_thumb_selector"
+                            app:trackTint="#E0F1F5" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_4sdp"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Duhur"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/duhur_azan_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/duhur_iqama_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/duhur_switch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            app:thumbTint="@drawable/switch_thumb_selector"
+                            app:trackTint="#E0F1F5" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_4sdp"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Asr"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/asr_azan_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/asr_iqama_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/asr_switch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            app:thumbTint="@drawable/switch_thumb_selector"
+                            app:trackTint="#E0F1F5" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_4sdp"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Maghreb"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/maghreb_azan_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/maghreb_iqama_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/maghreb_switch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            app:thumbTint="@drawable/switch_thumb_selector"
+                            app:trackTint="#E0F1F5" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_4sdp"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Isha"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/isha_azan_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/isha_iqama_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="00:00"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/isha_switch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            app:thumbTint="@drawable/switch_thumb_selector"
+                            app:trackTint="#E0F1F5" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="#42A8C3"
+                android:textSize="@dimen/_13sdp"
+                app:backgroundTint="#D0EAF0"
+                app:cornerRadius="@dimen/_10sdp"
+                app:strokeColor="@color/white"
+                app:strokeWidth="@dimen/_1sdp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

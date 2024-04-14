@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/main_layout"
+                android:orientation="vertical">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/main_nav_host_fragment"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:defaultNavHost="true"
+                    app:navGraph="@navigation/main_nav_graph" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navigation_view"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:background="@color/transparent"
+                app:elevation="0dp">
+
+            </com.google.android.material.navigation.NavigationView>
+        </androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

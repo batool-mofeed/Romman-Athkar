@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top_radius"
+        android:backgroundTint="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:text="Export as"
+            android:textColor="#42A8C3"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/img_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_12sdp"
+            android:text="Image"
+            android:textColor="#42A8C3"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/video_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_12sdp"
+            android:text="Video"
+            android:textColor="#42A8C3"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

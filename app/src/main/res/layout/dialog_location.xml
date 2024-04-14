@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_16sdp"
+        android:backgroundTint="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_top_radius"
+            android:gravity="center"
+            android:padding="@dimen/_4sdp"
+            android:textColor="@color/black"
+            android:text="Select Your Location"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_radius"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_4sdp"
+                android:gravity="center"
+                android:text="Select your city from the list or give us location access"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_32sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/category_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_city"
+                    android:drawableEnd="@drawable/ic_arrow_down"
+                    android:drawableTint="@color/white"
+                    android:hint="City"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:padding="@dimen/_6sdp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cities_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:background="@drawable/bg_rounded_corners"
+                    android:orientation="vertical"
+                    android:textSize="@dimen/_11ssp"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:listitem="@layout/item_city_drop_down" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="@dimen/_32sdp"
+                android:paddingEnd="@dimen/_32sdp"
+                android:text="Done"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp"
+                app:backgroundTint="#42A8C3"
+                app:cornerRadius="@dimen/_4sdp"
+                app:elevation="@dimen/_4sdp"
+                app:iconGravity="textStart"
+                app:strokeColor="@color/white"
+                app:strokeWidth="@dimen/_1sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/auto_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:text="Auto"
+                android:textAllCaps="false"
+                android:textColor="#42A8C3"
+                android:textSize="@dimen/_13sdp"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="@dimen/_10sdp"
+                app:icon="@drawable/ic_auto"
+                app:iconGravity="textStart"
+                app:iconTint="#42A8C3"
+                app:strokeColor="@color/white"
+                app:strokeWidth="@dimen/_1sdp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
