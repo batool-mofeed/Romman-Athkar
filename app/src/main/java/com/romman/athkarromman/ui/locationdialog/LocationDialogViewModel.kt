@@ -44,6 +44,7 @@ class LocationDialogViewModel : ViewModel() {
 
                 when {
                     response.isSuccessful -> {
+                        println("Repsonseeee ${response.code()} ${response.body()}")
                         decryptResponse(response.body())
                     }
 //                    response.code() in 500..550 -> {

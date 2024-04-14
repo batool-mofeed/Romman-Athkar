@@ -89,7 +89,7 @@ class HomeViewModel : ViewModel() {
     private fun parseData(decryptedData: String): Map<String, Array<String>> {
         val map = mutableMapOf<String, Array<String>>()
 
-        val jsonObject = JSONObject(decryptedData)
+        val jsonObject = JSONObject("{${decryptedData.trim()}")
         val keys = jsonObject.keys()
 
         while (keys.hasNext()) {
