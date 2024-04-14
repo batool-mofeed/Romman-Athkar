@@ -34,6 +34,8 @@ class HomeViewModel : ViewModel() {
     val nextPrayerName = MutableStateFlow("")
     val nextPrayerTime = MutableStateFlow("")
 
+    lateinit var prayerTimess: Array<String>
+
     fun loadPrayers(cityFile: String) {
         cityName.value = cityFile
         viewModelScope.launch {
@@ -55,11 +57,6 @@ class HomeViewModel : ViewModel() {
         _errorMessage.value = ""
         Timber.e("${e.message}")
         _loading.value = false
-    }
-
-    private fun findNextPrayerTime(prayerTimes: Array<String>): String? {
-        val currentTime = LocalTime.now()
-        return prayerTimes.find { LocalTime.parse(it) > currentTime }
     }
 
     private fun decryptResponse(body: ApisResponse?) {
@@ -110,6 +107,7 @@ class HomeViewModel : ViewModel() {
 
 
     private fun setPrayerTimes(prayerTimes: Array<String>) {
+        prayerTimess = prayerTimes
         val formatter = DateTimeFormatter.ofPattern("hh:mm a") // Define custom time formatter
         val currentTime = LocalTime.now()
         val nextPrayerIndex =

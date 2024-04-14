@@ -22,6 +22,10 @@ import com.romman.athkarromman.utils.buildProgressDialog
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class HomeFragment : Fragment() {
 
@@ -86,7 +90,67 @@ class HomeFragment : Fragment() {
             athkarLayout.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAthkarFragment())
             }
+            fajrLayout.setOnClickListener {
+                showRemainingTimeForPrayer(viewModel?.prayerTimess?.get(0))
+            }
+            shuruqLayout.setOnClickListener {
+                showRemainingTimeForPrayer(viewModel?.prayerTimess?.get(1))
+            }
+            duhurLayout.setOnClickListener {
+                showRemainingTimeForPrayer(viewModel?.prayerTimess?.get(2))
+            }
+            asrLayout.setOnClickListener {
+                showRemainingTimeForPrayer(viewModel?.prayerTimess?.get(3))
+            }
+            maghrebLayout.setOnClickListener {
+                showRemainingTimeForPrayer(viewModel?.prayerTimess?.get(4))
+            }
+            ishaLayout.setOnClickListener {
+                showRemainingTimeForPrayer(viewModel?.prayerTimess?.get(5))
+            }
 
+        }
+    }
+
+    private fun showRemainingTimeForPrayer(prayerTime: String?) {
+        prayerTime?.let {
+            // Parse the prayer time to get the hour and minute
+            val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
+            val prayerDateTime = formatter.parse(prayerTime)
+
+            prayerDateTime?.let { dateTime ->
+                // Get the current date and time
+                val currentTime = Calendar.getInstance().time
+
+                // Convert the prayer date to current year, month, and day
+                val calendar = Calendar.getInstance()
+                calendar.time = currentTime
+                val currentYear = calendar.get(Calendar.YEAR)
+                val currentMonth = calendar.get(Calendar.MONTH)
+                val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+                calendar.time = dateTime
+                calendar.set(Calendar.YEAR, currentYear)
+                calendar.set(Calendar.MONTH, currentMonth)
+                calendar.set(Calendar.DAY_OF_MONTH, currentDay)
+
+                val prayerDateTimeAdjusted = calendar.time
+
+                // Calculate the difference in milliseconds between current time and prayer time
+                val differenceMillis = prayerDateTimeAdjusted.time - currentTime.time
+
+                // Calculate the remaining hours and minutes
+                val remainingHours = TimeUnit.MILLISECONDS.toHours(differenceMillis)
+                val remainingMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis) % 60
+
+                // Create a toast to display the remaining time
+                val remainingTimeText = "Remaining time for prayer: $remainingHours hours and $remainingMinutes minutes"
+                Toast.makeText(requireContext(), remainingTimeText, Toast.LENGTH_SHORT).show()
+            } ?: run {
+                Toast.makeText(requireContext(), "Invalid prayer time format", Toast.LENGTH_SHORT).show()
+            }
+        } ?: run {
+            Toast.makeText(requireContext(), "Prayer time is not available", Toast.LENGTH_SHORT).show()
         }
     }
 
