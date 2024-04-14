@@ -41,7 +41,6 @@ class LocationDialogViewModel : ViewModel() {
             _loading.value = true
             try {
                 val response = ApiClient.apiService.getCities()
-                println("ooooooooooooooooooooooooo  ${response.code()} ${response.errorBody().toString()} ")
 
                 when {
                     response.isSuccessful -> {
@@ -80,7 +79,7 @@ class LocationDialogViewModel : ViewModel() {
                 ?.let { it1 -> JSONObject(it1) }
 
             // Extract the JSON array corresponding to "athkar"
-            val citiesArray = jsonObject?.getJSONArray("athkar")
+            val citiesArray = jsonObject?.getJSONArray("cities")
 
             val moshi = Moshi.Builder().build()
             val cityListType = Types.newParameterizedType(List::class.java, City::class.java)

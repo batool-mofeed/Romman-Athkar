@@ -17,6 +17,7 @@ import com.romman.athkarromman.BR
 import com.romman.athkarromman.R
 import com.romman.athkarromman.databinding.FragmentHomeBinding
 import com.romman.athkarromman.ui.locationdialog.LocationDialog
+import com.romman.athkarromman.utils.Prefs
 import com.romman.athkarromman.utils.buildProgressDialog
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -49,11 +50,20 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LocationDialog.newInstance {
-            viewModel?.loadPrayers(it)
-        }.show(parentFragmentManager, null)
+        checkLocation()
         initClicks()
         observeViewModel()
+    }
+
+    private fun checkLocation() {
+        if (Prefs["location", ""].isEmpty()) {
+            LocationDialog.newInstance {
+                viewModel?.loadPrayers(it)
+                Prefs["location"] = it
+            }.show(parentFragmentManager, null)
+        } else {
+            viewModel?.loadPrayers(Prefs["location", ""])
+        }
     }
 
     private fun observeViewModel() {

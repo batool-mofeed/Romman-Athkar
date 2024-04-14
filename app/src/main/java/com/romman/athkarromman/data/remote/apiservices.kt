@@ -8,7 +8,7 @@ import retrofit2.http.Path
  * Created By Batool Mofeed - 08/04/2024.
  **/
 interface ApiServices {
-    @GET("athkar.json")
+    @GET("cities.json")
     suspend fun getCities(
     ): Response<ApisResponse>
 
