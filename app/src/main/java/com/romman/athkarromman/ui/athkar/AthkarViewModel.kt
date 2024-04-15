@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.romman.athkarromman.BuildConfig
 import com.romman.athkarromman.data.model.AthkarItem
-import com.romman.athkarromman.data.model.City
 import com.romman.athkarromman.data.remote.ApiClient
 import com.romman.athkarromman.data.remote.ApisResponse
 import com.squareup.moshi.Moshi
@@ -16,7 +15,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
 import java.security.MessageDigest
-import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -85,10 +83,7 @@ class AthkarViewModel : ViewModel() {
 
 
     fun generateIV(): ByteArray {
-        val iv = ByteArray(16)
-        val secureRandom = SecureRandom()
-        secureRandom.nextBytes(iv)
-        return iv
+        return ByteArray(16)
     }
 
     private fun decrypt(text: String?): String? {

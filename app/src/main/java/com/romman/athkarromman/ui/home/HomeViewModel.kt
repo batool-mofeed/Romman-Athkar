@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
 import java.security.MessageDigest
-import java.security.SecureRandom
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -88,7 +87,7 @@ class HomeViewModel : ViewModel() {
     private fun parseData(decryptedData: String): Map<String, Array<String>> {
         val map = mutableMapOf<String, Array<String>>()
 
-        val jsonObject = JSONObject("{${decryptedData.trim()}")
+        val jsonObject = JSONObject(decryptedData.trim())
         val keys = jsonObject.keys()
 
         while (keys.hasNext()) {
@@ -165,9 +164,7 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun generateIV(): ByteArray {
-        val iv = ByteArray(16)
-        SecureRandom().nextBytes(iv)
-        return iv
+        return ByteArray(16)
     }
 
     private fun hashToSHA256(input: String): String {

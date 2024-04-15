@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
 import java.security.MessageDigest
-import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -96,10 +95,7 @@ class LocationDialogViewModel : ViewModel() {
     }
 
     fun generateIV(): ByteArray {
-        val iv = ByteArray(16)
-        val secureRandom = SecureRandom()
-        secureRandom.nextBytes(iv)
-        return iv
+        return ByteArray(16)
     }
 
     private fun decrypt(text: String?): String? {
