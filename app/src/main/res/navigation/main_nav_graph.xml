@@ -18,7 +18,11 @@
     <fragment
         android:id="@+id/editPrayersFragment"
         android:name="com.romman.athkarromman.ui.editprayers.EditPrayersFragment"
-        android:label="EditPrayersFragment" />
+        android:label="EditPrayersFragment" >
+        <argument
+            android:name="prayerTimes"
+            app:argType="string[]" />
+    </fragment>
     <fragment
         android:id="@+id/exportFragment"
         android:name="com.romman.athkarromman.ui.exportfragment.ExportFragment"

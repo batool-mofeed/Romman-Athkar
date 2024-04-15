@@ -1,11 +1,16 @@
 package com.romman.athkarromman.ui.home
 
+import android.Manifest
 import android.app.Dialog
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -57,6 +62,26 @@ class HomeFragment : Fragment() {
         checkLocation()
         initClicks()
         observeViewModel()
+        notificationPermission()
+    }
+
+
+    private fun notificationPermission() {
+        if (Build.VERSION.SDK_INT >= 32) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_NOTIFICATION_POLICY
+                ) == PackageManager.PERMISSION_GRANTED
+            ) return
+            pushNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    private val pushNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+        }
     }
 
     private fun checkLocation() {
@@ -85,7 +110,11 @@ class HomeFragment : Fragment() {
     fun initClicks() {
         with(binding) {
             editBtn.setOnClickListener {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditPrayersFragment())
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToEditPrayersFragment(
+                        viewModel?.prayerTimess!!
+                    )
+                )
             }
             athkarLayout.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAthkarFragment())
@@ -144,13 +173,16 @@ class HomeFragment : Fragment() {
                 val remainingMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis) % 60
 
                 // Create a toast to display the remaining time
-                val remainingTimeText = "Remaining time for prayer: $remainingHours hours and $remainingMinutes minutes"
+                val remainingTimeText =
+                    "Remaining time for prayer: $remainingHours hours and $remainingMinutes minutes"
                 Toast.makeText(requireContext(), remainingTimeText, Toast.LENGTH_SHORT).show()
             } ?: run {
-                Toast.makeText(requireContext(), "Invalid prayer time format", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Invalid prayer time format", Toast.LENGTH_SHORT)
+                    .show()
             }
         } ?: run {
-            Toast.makeText(requireContext(), "Prayer time is not available", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Prayer time is not available", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

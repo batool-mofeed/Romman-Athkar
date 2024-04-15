@@ -181,7 +181,6 @@
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <androidx.appcompat.widget.LinearLayoutCompat
-                                android:id="@+id/duhur_layout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -190,6 +189,7 @@
                                 android:orientation="vertical">
 
                                 <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/duhur_layout"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_duhur" />
