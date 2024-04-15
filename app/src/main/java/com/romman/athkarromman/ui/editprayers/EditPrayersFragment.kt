@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -93,7 +92,6 @@ class EditPrayersFragment : Fragment() {
 
     private fun scheduleNotifications() {
         val prayerTimes = args.prayerTimes
-
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), PrayerNotificationReceiver::class.java)
 
@@ -105,35 +103,45 @@ class EditPrayersFragment : Fragment() {
             5 to binding.ishaSwitch.isChecked
         )
 
-        val calendar = Calendar.getInstance()
+        val today = Calendar.getInstance()
+        val currentHour = today.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = today.get(Calendar.MINUTE)
 
         for ((prayer, isSwitchOn) in prayerSwitches) {
-            val timeString = prayerTimes[prayer]
-            if (isSwitchOn && timeString != null) {
-                val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
-                val date = formatter.parse(timeString)
-                date?.let {
-                    calendar.time = it
+            if (isSwitchOn) {
+                val timeString = prayerTimes[prayer]
+                timeString.let {
+                    val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
+                    val prayerTime = formatter.parse("11:54 PM")
+                    prayerTime?.let {
+                        val prayerCalendar = Calendar.getInstance().apply {
+                            time = it
+                            set(Calendar.YEAR, today.get(Calendar.YEAR))
+                            set(Calendar.MONTH, today.get(Calendar.MONTH))
+                            set(Calendar.DAY_OF_MONTH, today.get(Calendar.DAY_OF_MONTH))
+                        }
 
-                    val pendingIntent = PendingIntent.getBroadcast(
-                        requireContext(),
-                        prayer.hashCode(),
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
+                        // Check if the prayer time has already passed for today
+                        if (prayerCalendar.get(Calendar.HOUR_OF_DAY) < currentHour ||
+                            (prayerCalendar.get(Calendar.HOUR_OF_DAY) == currentHour &&
+                                    prayerCalendar.get(Calendar.MINUTE) <= currentMinute)
+                        ) {
+                            // If prayer time has passed, skip scheduling notification
+                            return
+                        }
 
-                    alarmManager.cancel(pendingIntent) // Cancel the existing alarm
+                        val pendingIntent = PendingIntent.getBroadcast(
+                            requireContext(),
+                            prayer.hashCode(),
+                            intent,
+                            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                        )
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        alarmManager.cancel(pendingIntent) // Cancel the existing alarm
+
                         alarmManager.setExactAndAllowWhileIdle(
                             AlarmManager.RTC_WAKEUP,
-                            calendar.timeInMillis,
-                            pendingIntent
-                        )
-                    } else {
-                        alarmManager.setExact(
-                            AlarmManager.RTC_WAKEUP,
-                            calendar.timeInMillis,
+                            prayerCalendar.timeInMillis,
                             pendingIntent
                         )
                     }
