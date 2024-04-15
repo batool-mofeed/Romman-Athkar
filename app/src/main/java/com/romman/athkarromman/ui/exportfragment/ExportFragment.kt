@@ -107,8 +107,8 @@ class ExportFragment : Fragment() {
                 "-loop", "1",
                 "-i", imgFile.absolutePath,
                 "-i", audioUrl,
-                "-c:v", "libx264",
-                "-c:a", "copy",
+                "-c:v", "mpeg4",
+                "-c:a", "aac",
                 "-strict", "normal",
                 "-shortest",
                 "-preset", "superfast",
@@ -125,7 +125,6 @@ class ExportFragment : Fragment() {
             if (rc == RETURN_CODE_SUCCESS) {
                 Timber.e("Audio merged with video successfully.")
                 launch(Dispatchers.Main) {
-                    hideProgressDialog()
                     downloadFile(mergedVideoFile, "video/mp4")
                 }
             } else {
@@ -153,7 +152,7 @@ class ExportFragment : Fragment() {
             }
 
             val saveDeferred = async { saveImage() }
-            saveDeferred.await() // Wait for saveImage() to complete
+            saveDeferred.await()
 
 
             /// to not make all text in one line
@@ -188,8 +187,9 @@ class ExportFragment : Fragment() {
             if (rc == RETURN_CODE_SUCCESS) {
                 println("Command execution completed successfully.")
                 launch(Dispatchers.Main) {
-                    hideProgressDialog()
-                    downloadFile(finalImageFile, "image/jpeg")
+                    if (audioUrl == null) {
+                        downloadFile(finalImageFile, "image/jpeg")
+                    }
                 }
             } else {
                 println("Command execution failed with rc=$rc")
@@ -259,7 +259,7 @@ class ExportFragment : Fragment() {
                         launch(Dispatchers.Main) {
                             Toast.makeText(
                                 requireContext(),
-                                "Downloaded successfully to gallery",
+                                "Your exported file will be in the gallery shortly",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -269,6 +269,9 @@ class ExportFragment : Fragment() {
                     } finally {
                         inputStream.close()
                         output.close()
+                        launch(Dispatchers.Main) {
+                            hideProgressDialog()
+                        }
                     }
                 }
             }
