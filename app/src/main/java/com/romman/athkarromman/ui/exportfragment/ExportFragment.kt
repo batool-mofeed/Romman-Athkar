@@ -4,10 +4,17 @@ import android.app.Dialog
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +33,6 @@ import com.romman.athkarromman.utils.PermissionsHelper
 import com.romman.athkarromman.utils.buildProgressDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -139,96 +145,94 @@ class ExportFragment : Fragment() {
 
 
     private fun addTextToImageAndDownload(text: String, audioUrl: String? = null) {
-        showProgressDialog()
+        if (audioUrl == null) {
+            showProgressDialog()
+        }
+
+        val wrappedText = getWrappedText(text)
 
         GlobalScope.launch(Dispatchers.IO) {
-            val finalImageFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                val imagesDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                File(imagesDir, "${System.currentTimeMillis()}_text_added.jpg")
-            } else {
-                val downloadsDir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                File(downloadsDir, "${System.currentTimeMillis()}_text_added.jpg")
-            }
+            try {
+                val resources = requireContext().resources
+                val bitmap = BitmapFactory.decodeResource(resources, R.drawable.bg_export_img)
+                val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
-            val saveDeferred = async { saveImage() }
-            saveDeferred.await()
+                val canvas = Canvas(mutableBitmap)
+//                val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+//                paint.color = Color.BLACK
+//                paint.textSize = 33F
 
+                val bounds = Rect()
+//                paint.getTextBounds(wrappedText.joinToString("\n"), 0, text.length, bounds)
 
-            /// to not make all text in one line
-            val maxWordsPerLine = 9
-            val lines = mutableListOf<String>()
-            var currentLine = ""
-            text.split(" ").forEachIndexed { index, word ->
-                if (index % maxWordsPerLine == 0 && index > 0) {
-                    lines.add(currentLine)
-                    currentLine = word
-                } else {
-                    currentLine += if (currentLine.isEmpty()) word else " $word"
-                }
-            }
-            if (currentLine.isNotEmpty()) {
-                lines.add(currentLine)
-            }
-            val wrappedText = lines.joinToString("\n")
-            //end of lines
+                // Calculate x and y coordinates to center the text
+                val x = (canvas.width - bounds.width()) / 50
+                val y = (canvas.height + bounds.height()) / 2.5
 
-            val command = arrayOf(
-                "-i",
-                "${requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)}/bg_athkar.png",
-                "-vf",
-                "drawtext=text_shaping=1:text='$wrappedText':x=100:y=200:fontsize=24:fontcolor=black:fontfile=/system/fonts/DroidSans-Bold.ttf",
-                finalImageFile.absolutePath
-            )
+                val mTextLayout = StaticLayout(
+                    wrappedText.joinToString ("\n"),
+                    TextPaint().apply { textSize = 50f },
+                    canvas.width,
+                    Layout.Alignment.ALIGN_CENTER,
+                    1.0f,
+                    0.0f,
+                    false
+                )
+                canvas.save()
+                canvas.translate(x.toFloat() ,y.toFloat())
+                mTextLayout.draw(canvas)
+                canvas.restore()
 
+                val imageFile = saveBitmapAsImage(mutableBitmap)
 
-            val rc = FFmpeg.execute(command)
-
-            if (rc == RETURN_CODE_SUCCESS) {
-                println("Command execution completed successfully.")
                 launch(Dispatchers.Main) {
                     if (audioUrl == null) {
-                        downloadFile(finalImageFile, "image/jpeg")
+                        downloadFile(imageFile, "image/jpeg")
+                    } else {
+                        mergeAudioWithVideo(audioUrl, imageFile)
                     }
                 }
-            } else {
-                println("Command execution failed with rc=$rc")
+            } catch (e: Exception) {
+                e.printStackTrace()
                 launch(Dispatchers.Main) {
                     hideProgressDialog()
                     // Handle failure
                 }
             }
-
-            if (audioUrl != null) {
-                mergeAudioWithVideo(audioUrl, finalImageFile)
-            }
         }
     }
 
-    private fun saveImage() {
-        val bm = BitmapFactory.decodeResource(
-            resources,
-            R.drawable.bg_export_img
-        )
+    private fun getWrappedText(text: String): MutableList<String> {
+        val maxWordsPerLine = 8
+        val lines = mutableListOf<String>()
+        var currentLine = ""
+        text.split(" ").forEachIndexed { index, word ->
+            if (index % maxWordsPerLine == 0 && index > 0) {
+                lines.add(currentLine.trim()) // Trim to remove leading/trailing whitespace
+                currentLine = word
+            } else {
+                currentLine += if (currentLine.isEmpty()) word else " $word"
+            }
+        }
+        if (currentLine.isNotEmpty()) {
+            lines.add(currentLine.trim())
+        }
+        return lines
+    }
+
+    private fun saveBitmapAsImage(bitmap: Bitmap): File {
+        val imageFileName = "${System.currentTimeMillis()}_text_added.jpg"
         val imagesDir = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         } else {
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         }
-        val file = File(imagesDir, "bg_athkar.png")
-        if (!file.exists()) {
-            try {
-                val outStream = FileOutputStream(file)
-                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream)
-                outStream.flush()
-                outStream.close()
-            } catch (e: Exception) {
-                println("rrrrrrrrrrrrrrr ${e.message}")
-                e.printStackTrace()
-            }
+        val imageFile = File(imagesDir, imageFileName)
+        FileOutputStream(imageFile).use { outputStream ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         }
+        return imageFile
     }
-
 
     private suspend fun downloadFile(file: File, mimeType: String) {
         withContext(Dispatchers.IO) {
@@ -257,9 +261,10 @@ class ExportFragment : Fragment() {
                         output.flush()
                         // Display Toast message on the main thread
                         launch(Dispatchers.Main) {
+                            hideProgressDialog()
                             Toast.makeText(
                                 requireContext(),
-                                "Your exported file will be in the gallery shortly",
+                                "Downloaded successfully to gallery",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -269,9 +274,6 @@ class ExportFragment : Fragment() {
                     } finally {
                         inputStream.close()
                         output.close()
-                        launch(Dispatchers.Main) {
-                            hideProgressDialog()
-                        }
                     }
                 }
             }
