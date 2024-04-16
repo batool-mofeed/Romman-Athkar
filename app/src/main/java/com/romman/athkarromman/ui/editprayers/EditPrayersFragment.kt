@@ -112,7 +112,7 @@ class EditPrayersFragment : Fragment() {
                 val timeString = prayerTimes[prayer]
                 timeString.let {
                     val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
-                    val prayerTime = formatter.parse("11:54 PM")
+                    val prayerTime = formatter.parse(it)
                     prayerTime?.let {
                         val prayerCalendar = Calendar.getInstance().apply {
                             time = it
